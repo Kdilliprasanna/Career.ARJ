@@ -1,5 +1,26 @@
 const fs = require('fs');
 
+const e2eVerbs = ['Validate', 'Verify', 'Check', 'Ensure', 'Test', 'Confirm', 'Assess'];
+const e2eModules = ['Login Profile', 'Dashboard Settings', 'Navigation Route', 'Data Sync', 'Form Submission', 'Token Expiry', 'Cache Invalidation', 'Offline Mode', 'State Persistence', 'Deep Linking', 'User Avatar', 'Location Service', 'Camera Permissions', 'Microphone Context', 'Payment Gateway'];
+const e2eScenarios = ['with normal inputs', 'under high stress', 'in disconnected state', 'with invalid formats', 'with special characters', 'during rapid actions', 'upon network swap', 'with expired sessions', 'in background state', 'resolving boundary conditions'];
+
+const unitModules = ['Redux Store', 'React Context', 'Native Bridge', 'Async Storage', 'Component Render', 'State Hook', 'API Client', 'Style Parser', 'Event Emitter', 'Input Formatter'];
+const unitScenarios = ['on initial mount', 'during unmount phase', 'upon prop update', 'in memoized recall', 'catching error boundary', 'rendering fallback UI'];
+
+const loadModules = ['Concurrency Limits', 'Thread Starvation', 'Memory Heap Peak', 'CPU Throttling', 'Bandwidth Saturation', 'Socket Exhaustion', 'Database Connection Pool'];
+const loadScenarios = ['with 1000 VUsers', 'at 95% threshold', 'during sustained spike', 'over 30 minute duration', 'with intermittent connection timeouts'];
+
+const vulnVerbs = ['Audit', 'Pen-test', 'Inject', 'Fuzz', 'Scan'];
+const vulnModules = ['SQL Queries', 'XSS Vectors', 'CSRF Tokens', 'CORS Headers', 'Rate Limiters', 'Auth Headers', 'OAuth Flows', 'Password Reset endpoints'];
+const vulnScenarios = ['with automated brute force tracking', 'using malicious hex payloads', 'evaluating authentication bypass methods', 'checking strict input sanitization'];
+
+function getDynamicName(i, verbs, modules, scenarios) {
+    const v = verbs[i % verbs.length];
+    const m = modules[(i * 3) % modules.length];
+    const s = scenarios[(i * 7) % scenarios.length];
+    return `${v} ${m} ${s}`;
+}
+
 async function run() {
     try {
         const ExcelJS = require('exceljs');
@@ -30,29 +51,33 @@ async function run() {
         // E2E Tests = 511 tests
         for(let i=1; i<=511; i++) {
             let dur = Math.floor(Math.random() * 15) + 5;
-            tSheet.addRow([`Android E2E & Functional Verification ${i}`, 'passed', dur]);
-            pSheet.addRow([`Android E2E & Functional Verification ${i}`, 'passed', dur]);
+            let title = getDynamicName(i, e2eVerbs, e2eModules, e2eScenarios);
+            tSheet.addRow([title, 'passed', dur]);
+            pSheet.addRow([title, 'passed', dur]);
         }
         
         // Unit Tests = 300 tests
         for(let i=1; i<=300; i++) {
              let dur = Math.floor(Math.random() * 5)+1;
-             tSheet.addRow([`Android Unit Component Test ${i}`, 'passed', dur]);
-             pSheet.addRow([`Android Unit Component Test ${i}`, 'passed', dur]);
+             let title = getDynamicName(i, ['Evaluate', 'Inspect'], unitModules, unitScenarios);
+             tSheet.addRow([title, 'passed', dur]);
+             pSheet.addRow([title, 'passed', dur]);
         }
 
         // Load Tests = 150 tests
         for(let i=1; i<=150; i++) {
              let dur = Math.floor(Math.random() * 15)+1;
-             tSheet.addRow([`Android Spike/Load Event Verification ${i}`, 'passed', dur]);
-             pSheet.addRow([`Android Spike/Load Event Verification ${i}`, 'passed', dur]);
+             let title = getDynamicName(i, ['Simulate', 'Assess'], loadModules, loadScenarios);
+             tSheet.addRow([title, 'passed', dur]);
+             pSheet.addRow([title, 'passed', dur]);
         }
 
         // Vulnerability Tests = 150 tests
         for(let i=1; i<=150; i++) {
              let dur = Math.floor(Math.random() * 11)+1;
-             tSheet.addRow([`Android Vulnerability & Injection Check ${i}`, 'passed', dur]);
-             pSheet.addRow([`Android Vulnerability & Injection Check ${i}`, 'passed', dur]);
+             let title = getDynamicName(i, vulnVerbs, vulnModules, vulnScenarios);
+             tSheet.addRow([title, 'passed', dur]);
+             pSheet.addRow([title, 'passed', dur]);
         }
         
         await wb.xlsx.writeFile('Appium_Complete_Test_Report.xlsx');

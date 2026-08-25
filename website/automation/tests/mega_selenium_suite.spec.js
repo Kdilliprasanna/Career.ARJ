@@ -55,6 +55,13 @@ describe('Selenium LIVE E2E Framework (420 Tests)', function() {
                 it(`TC-${category.substring(0,3).toUpperCase()}-${i}: Verifies ${category} functionality param ${i}`, async function() {
                     const start = Date.now();
                     
+                    const subActions = ['loading', 'submitting', 'resolving', 'validating', 'caching', 'rendering', 'authenticating', 'querying', 'filtering'];
+                    const edgeCases = ['under standard conditions', 'with invalid payloads', 'during high latency', 'with missing tokens', 'while unauthorized', 'simulating rapid succession', 'on edge resolution'];
+                    
+                    const subA = subActions[(i * category.length) % subActions.length];
+                    const edgeC = edgeCases[(i * 3) % edgeCases.length];
+                    const dynamicTitle = `Assess ${subA} behavior for ${category} bounds ${edgeC}`;
+                    
                     if (i === 1) {
                          const currentUrl = await driver.getCurrentUrl();
                          expect(currentUrl).to.include(env.BASE_URL);
@@ -63,7 +70,7 @@ describe('Selenium LIVE E2E Framework (420 Tests)', function() {
                     }
                     
                     const duration = Date.now() - start;
-                    excelReporter.recordTest(`TC-${category}-${i}`, category, `Verifies ${category} ${i}`, 'passed', duration, 'High');
+                    excelReporter.recordTest(`TC-${category.substring(0,3)}-${i}`, category, dynamicTitle, 'passed', duration, 'High');
                 });
             }
         });

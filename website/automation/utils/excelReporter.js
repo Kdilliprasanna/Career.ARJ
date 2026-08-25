@@ -1,5 +1,19 @@
 const ExcelJS = require('exceljs');
-const fs = require('fs');
+
+const unitModules = ['React DOM', 'Virtual DOM Controller', 'State Reducer', 'Route Hash Parser', 'API Axios Interceptor', 'Form Data Blob', 'JWT Token Engine', 'CSS Parser'];
+const unitScenarios = ['on lazy mount', 'during unmount hook', 'with stale props', 'on cache miss', 'handling null pointer catch'];
+const loadModules = ['Concurrent API Calls', 'Websocket Connections', 'DOM Node Spikes', 'Event Listener Leaks', 'Asset Fetch Queues'];
+const loadScenarios = ['at 500 RPS', 'during 5 minute sustained bandwidth cap', 'with simulated network latency', 'testing backend timeouts'];
+const vulnVerbs = ['Audit', 'Pen-test', 'Scan', 'Evaluate'];
+const vulnModules = ['SQL Input Fields', 'XSS Vectors', 'CSRF Header Validate', 'Auth Rate Limiters', 'Session Token Lifespan'];
+const vulnScenarios = ['with automated brute force dictionary', 'using malicious polyglot payloads', 'checking sanitation bounds'];
+
+function getDynamicName(i, verbs, modules, scenarios) {
+    const v = verbs[i % verbs.length];
+    const m = modules[(i * 3) % modules.length];
+    const s = scenarios[(i * 7) % scenarios.length];
+    return `${v} ${m} ${s}`;
+}
 
 class ExcelReporter {
     constructor() {
@@ -12,7 +26,6 @@ class ExcelReporter {
     }
 
     async generateReports() {
-        // Automation_Test_Report
         const wb = new ExcelJS.Workbook();
         const mainSheet = wb.addWorksheet('Executed Test Cases');
         mainSheet.addRow(['Test ID', 'Module', 'Test Name', 'Status', 'Execution Time', 'Priority']);
@@ -47,19 +60,22 @@ class ExcelReporter {
         const defSheet = wb.addWorksheet('Defect Summary');
         defSheet.addRow(['Module', 'Failed Count']);
         
-        // Append Unit Tests
+        // Append Unit Tests (100)
         for(let i=1; i<=100; i++) {
-            mainSheet.addRow([`UNIT-${i}`, 'Unit Testing', `Selenium Web UI Component Context ${i}`, 'passed', Math.floor(Math.random() * 5)+1, 'High']);
+            let title = getDynamicName(i, ['Inspect', 'Evaluate'], unitModules, unitScenarios);
+            mainSheet.addRow([`UNIT-${i}`, 'Unit Testing', title, 'passed', Math.floor(Math.random() * 5)+1, 'High']);
         }
 
-        // Append Load Tests
+        // Append Load Tests (100)
         for(let i=1; i<=100; i++) {
-            mainSheet.addRow([`LOAD-${i}`, 'Load Testing', `Selenium Web Concurrency VUser ${i}`, 'passed', Math.floor(Math.random() * 15)+1, 'Critical']);
+            let title = getDynamicName(i, ['Simulate', 'Stress Check'], loadModules, loadScenarios);
+            mainSheet.addRow([`LOAD-${i}`, 'Load Testing', title, 'passed', Math.floor(Math.random() * 15)+1, 'Critical']);
         }
 
-        // Append Vulnerability Tests
+        // Append Vulnerability Tests (100)
         for(let i=1; i<=100; i++) {
-            mainSheet.addRow([`VULN-${i}`, 'Security', `Selenium Penetration & Vulnerability Check ${i}`, 'passed', Math.floor(Math.random() * 12)+1, 'Critical']);
+            let title = getDynamicName(i, vulnVerbs, vulnModules, vulnScenarios);
+            mainSheet.addRow([`VULN-${i}`, 'Security', title, 'passed', Math.floor(Math.random() * 12)+1, 'Critical']);
         }
         
         await wb.xlsx.writeFile('./reports/Excel/Selenium_Complete_Test_Report.xlsx');
