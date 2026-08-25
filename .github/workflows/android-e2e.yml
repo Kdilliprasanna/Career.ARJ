@@ -5,6 +5,9 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   mobile-e2e-tests:
     runs-on: ubuntu-latest
@@ -68,6 +71,7 @@ jobs:
 
       - name: Deploy HTML Report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
+        continue-on-error: true
         with:
           folder: .
           branch: gh-pages
