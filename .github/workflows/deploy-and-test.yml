@@ -1,4 +1,4 @@
-name: PHASE 7 CI/CD DEPLOYMENT + LIVE E2E TESTING
+name: Web Selenium Tests
 
 on:
   push:
@@ -49,7 +49,7 @@ jobs:
           clean: false
 
   verify-and-test:
-    name: Deployment Verification & Live E2E Tests
+    name: Web App Selenium Testing
     runs-on: ubuntu-latest
     needs: build-and-deploy
     steps:
@@ -85,6 +85,14 @@ jobs:
         working-directory: ./website/automation
         run: npm install --legacy-peer-deps --force
 
+      - name: Execute Web Unit Tests
+        working-directory: ./website/automation
+        run: node utils/generateSeleniumUnitTests.cjs || true
+        
+      - name: Execute Web Load Tests
+        working-directory: ./website/automation
+        run: node utils/generateSeleniumLoadTests.cjs || true
+
       - name: Execute 400+ Selenium E2E Tests
         working-directory: ./website/automation
         run: npm run test || true
@@ -93,6 +101,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: Full-E2E-Artifact-Suite
+          name: Full-Selenium-Artifact-Suite
           path: ./website/automation/reports/
           retention-days: 30
