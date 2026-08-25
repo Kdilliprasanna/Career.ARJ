@@ -1,0 +1,72 @@
+name: Android E2E Appium Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  mobile-e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Enable KVM group perms
+        run: |
+            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger --name-match=kvm
+
+      - name: Install dependencies
+        run: |
+          npm init -y
+          npm install @wdio/cli webdriverio @wdio/local-runner @wdio/mocha-framework @wdio/spec-reporter exceljs 
+          npm install -g appium
+          appium driver install uiautomator2
+
+      - name: Build Android Debug APK
+        run: |
+          cd android
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --no-daemon
+        
+      - name: Run Emulator & Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          APK_PATH: android/app/build/outputs/apk/debug/app-debug.apk
+        with:
+          api-level: 29
+          profile: Nexus 6
+          target: default
+          arch: x86_64
+          script: |
+            chmod +x ./scripts/ci_run_tests.sh
+            ./scripts/ci_run_tests.sh
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test-Reports
+          path: |
+            Execution-Artifact.xlsx
+            execution-report.html
+
+      - name: Deploy HTML Report to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: .
+          branch: gh-pages
+          target-folder: reports/history/build-${{ github.run_number }}
+          clean: false
