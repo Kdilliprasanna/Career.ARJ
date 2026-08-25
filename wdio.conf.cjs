@@ -12,6 +12,8 @@ exports.config = {
     capabilities: [{
         platformName: 'Android',
         'appium:automationName': 'UiAutomator2',
+        'appium:appPackage': 'com.android.settings',
+        'appium:appActivity': '.Settings',
         'appium:noReset': true,
         'appium:fullReset': false
     }],
