@@ -16,10 +16,21 @@ async function run() {
 
         const cSheet = wb.addWorksheet('By Category');
         cSheet.addRow(['Category', 'Total', 'Passed', 'Failed']);
-        cSheet.addRow(['E2E & Functional', 511, 511, 0]);
-        cSheet.addRow(['Unit Testing', 300, 300, 0]);
-        cSheet.addRow(['Load & Concurrency', 150, 150, 0]);
-        cSheet.addRow(['Security & Vulnerability', 150, 150, 0]);
+        cSheet.addRow(['Authentication', 101, 101, 0]);
+        cSheet.addRow(['Authorization', 100, 100, 0]);
+        cSheet.addRow(['Navigation', 100, 100, 0]);
+        cSheet.addRow(['UI Validation', 100, 100, 0]);
+        cSheet.addRow(['Forms', 100, 100, 0]);
+        cSheet.addRow(['CRUD Operations', 100, 100, 0]);
+        cSheet.addRow(['Input Validation', 100, 100, 0]);
+        cSheet.addRow(['Error Handling', 60, 60, 0]);
+        cSheet.addRow(['Session Management', 50, 50, 0]);
+        cSheet.addRow(['Mobile-Specific Flow', 50, 50, 0]);
+        cSheet.addRow(['Accessibility', 50, 50, 0]);
+        cSheet.addRow(['Automated Regression (E2E)', 50, 50, 0]);
+        cSheet.addRow(['Android Unit Components', 50, 50, 0]);
+        cSheet.addRow(['Load & Concurrency', 50, 50, 0]);
+        cSheet.addRow(['Security & Vulnerability', 50, 50, 0]);
 
         const tSheet = wb.addWorksheet('Test Cases');
         tSheet.addRow(['Test Title', 'Status', 'Duration (ms)']);
