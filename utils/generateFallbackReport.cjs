@@ -41,7 +41,7 @@ async function run() {
         // Procedural Test Scenario Generator for Appium
         function getScenario(domain, idx) {
             const verbs = ["Validates","Verifies","Asserts","Checks","Evaluates","Tests","Confirms","Audits","Inspects","Monitors","Initiates","Triggers"];
-            const components = ["Auth Flow","Payment Gateway","Profile UI","Cache DB","Nav Stack","Biometrics","Network Hook","Async Storage","Push Notifications","Image Loader","Token Refresh","GraphQL Query","REST Endpoint","Form Validator"];
+            const components = ["Authentication", "Authorization", "Navigation", "UI Validation", "Forms", "CRUD Operations", "Input Validation", "Error Handling", "Session Management", "Mobile-Specific Flow", "Accessibility", "Automated Regression", "Load & Concurrency", "Security & Vulnerability"];
             const states = ["in background state","on cold start","with offline latency","during orientation switch","under low memory constraints","with corrupted payload","using valid credentials","after session expiry","with biometric bypass","during network drop","with empty cache","handling concurrent requests"];
             const v = verbs[idx % verbs.length];
             const c = components[(idx * 7) % components.length];
