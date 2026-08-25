@@ -1,0 +1,45 @@
+name: Career AI (ARJ) CI Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-and-build:
+    name: Build & Test Suite Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Verify Vite Production Build
+        run: npm run build
+
+      - name: Start Backend Server & Run E2E Security Tests
+        env:
+          PORT: 4000
+          JWT_SECRET: ci-testing-jwt-secret-key-12345
+        run: |
+          node server/index.js &
+          sleep 3
+          npm run test:e2e
+
+      - name: Run Selenium Headless Browser Tests
+        continue-on-error: true
+        env:
+          PORT: 4000
+          JWT_SECRET: ci-testing-jwt-secret-key-12345
+        run: |
+          npm run test:selenium
