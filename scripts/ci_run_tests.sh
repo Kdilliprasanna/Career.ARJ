@@ -34,7 +34,7 @@ npx wdio run wdio.conf.cjs
 WDIO_EXIT=$?
 
 # If WDIO exits early or fails without generating a report, fallback
-if [ ! -f "Execution-Artifact.xlsx" ]; then
+if [ ! -f "Appium_Complete_Test_Report.xlsx" ]; then
     echo "WDIO exit caused missing report. Generating fallback..."
     node utils/generateFallbackReport.cjs
 fi
