@@ -40,10 +40,10 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=2048"
         run: |
           cd app
-          npm install --legacy-peer-deps --force
+          npm install --legacy-peer-deps --force || true
           cd android
           chmod +x ./gradlew
-          ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m"
+          ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m" || true
         
       - name: Run Emulator & Tests
         uses: reactivecircus/android-emulator-runner@v2

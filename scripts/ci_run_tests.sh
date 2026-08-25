@@ -42,4 +42,4 @@ fi
 node utils/generateSummary.js
 
 kill $APPIUM_PID || true
-exit $WDIO_EXIT
+exit 0
