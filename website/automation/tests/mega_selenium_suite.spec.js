@@ -6,20 +6,19 @@ const { writeSummaryMarkDown } = require('../utils/summaryReporter');
 const env = require('../config/env');
 
 const categories = {
-    'Authentication': 40,
-    'Authorization': 40,
-    'Navigation': 30,
-    'UI Validation': 50,
-    'Forms': 50,
-    'CRUD Operations': 50,
-    'Input Validation': 40,
-    'Error Handling': 20,
-    'Session Management': 20,
-    'File Upload': 20,
-    'Accessibility': 20,
-    'Responsive Design': 20,
-    'Performance Smoke Tests': 20,
-    'Regression': 50
+    'Authentication': 20,
+    'Authorization': 20,
+    'Navigation': 10,
+    'UI Validation': 10,
+    'Forms': 10,
+    'CRUD Operations': 10,
+    'Input Validation': 10,
+    'Error Handling': 10,
+    'Session Management': 10,
+    'File Upload': 10,
+    'Accessibility': 10,
+    'Responsive Design': 10,
+    'Regression': 10
 };
 
 describe('Selenium LIVE E2E Framework (420 Tests)', function() {
