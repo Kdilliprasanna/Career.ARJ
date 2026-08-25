@@ -1,5 +1,5 @@
-const xlsxReporter = require('./utils/xlsxReporter');
-const { generateHtmlReport } = require('./utils/generateHtmlReport');
+const xlsxReporter = require('./utils/xlsxReporter.cjs');
+const { generateHtmlReport } = require('./utils/generateHtmlReport.cjs');
 const fs = require('fs');
 
 exports.config = {

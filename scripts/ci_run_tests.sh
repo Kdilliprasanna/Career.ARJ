@@ -30,16 +30,16 @@ timeout 30 bash -c 'until curl -s http://127.0.0.1:4723/status > /dev/null; do s
 # Execute WDIO
 export WDIO_CI_SPEC="./tests/12_e2e/mega_android_1100.test.js"
 echo "Running WDIO tests..."
-npx wdio run wdio.conf.js
+npx wdio run wdio.conf.cjs
 WDIO_EXIT=$?
 
 # If WDIO exits early or fails without generating a report, fallback
 if [ ! -f "Execution-Artifact.xlsx" ]; then
     echo "WDIO exit caused missing report. Generating fallback..."
-    node utils/generateFallbackReport.js
+    node utils/generateFallbackReport.cjs
 fi
 
-node utils/generateSummary.js
+node utils/generateSummary.cjs
 
 kill $APPIUM_PID || true
 exit 0
