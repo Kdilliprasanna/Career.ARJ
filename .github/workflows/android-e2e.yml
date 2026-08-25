@@ -31,17 +31,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install @wdio/cli webdriverio @wdio/local-runner @wdio/mocha-framework @wdio/spec-reporter exceljs --legacy-peer-deps
+          npm install @wdio/cli webdriverio @wdio/local-runner @wdio/mocha-framework @wdio/spec-reporter exceljs --no-save --legacy-peer-deps
           npm install -g appium
           appium driver install uiautomator2
 
       - name: Build Android Debug APK
+        env:
+          NODE_OPTIONS: "--max-old-space-size=2048"
         run: |
           cd app
-          npm install --legacy-peer-deps
+          npm install --legacy-peer-deps --force
           cd android
           chmod +x ./gradlew
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m"
         
       - name: Run Emulator & Tests
         uses: reactivecircus/android-emulator-runner@v2
