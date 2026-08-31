@@ -27,19 +27,29 @@ APPIUM_PID=$!
 echo "Waiting for Appium to start..."
 timeout 30 bash -c 'until curl -s http://127.0.0.1:4723/status > /dev/null; do sleep 1; done'
 
+# Navigate to Appium independent workspace
+cd ./app/automation
+
 # Execute WDIO
 export WDIO_CI_SPEC="./tests/12_e2e/mega_android_1100.test.js"
 echo "Running WDIO tests..."
-npx wdio run wdio.conf.cjs
+npm run test
 WDIO_EXIT=$?
 
 # If WDIO exits early or fails without generating a report, fallback
-if [ ! -f "Appium_Complete_Test_Report.xlsx" ]; then
+if [ ! -f "Appium_Complete_Test_Report.xlsx" ] && [ ! -f "Execution-Artifact.xlsx" ]; then
     echo "WDIO exit caused missing report. Generating fallback..."
     node utils/generateFallbackReport.cjs
 fi
 
 node utils/generateSummary.cjs
+
+# Copy artifacts back to root for GitHub Actions
+cp Execution-Artifact.xlsx ../../ 2>/dev/null || true
+cp Appium_Complete_Test_Report.xlsx ../../ 2>/dev/null || true
+cp execution-report.html ../../ 2>/dev/null || true
+
+cd ../..
 
 kill $APPIUM_PID || true
 exit 0
