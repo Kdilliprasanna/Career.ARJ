@@ -46,7 +46,7 @@ async function run() {
             const v = verbs[idx % verbs.length];
             const c = components[(idx * 7) % components.length];
             const s = states[(idx * 11) % states.length];
-            return `[${domain}] ${v} ${c} securely ${s}`;
+            return `${v} ${c} securely ${s}`;
         }
 
         let globalCount = 0;
