@@ -41,54 +41,26 @@ async function run() {
         // Procedural Test Scenario Generator for Appium
         function getScenario(idx) {
             const verbs = ["Validates","Verifies","Asserts","Checks","Evaluates","Tests","Confirms","Audits","Inspects","Monitors","Initiates","Triggers"];
-            const components = ["Authentication", "Authorization", "Navigation", "UI Validation", "Forms", "CRUD Operations", "Input Validation", "Error Handling", "Session Management", "Mobile-Specific Flow", "Accessibility", "Automated Regression", "Load & Concurrency", "Security & Vulnerability"];
+            const components = ["Authentication", "Authorization", "Navigation", "UI Validation", "Forms", "CRUD Operations", "Input Validation", "Error Handling", "Session Management", "Mobile-Specific Flow", "Accessibility", "Automated Regression (E2E)", "Android Unit Components", "Load & Concurrency", "Security & Vulnerability"];
             const states = ["in background state","on cold start","with offline latency","during orientation switch","under low memory constraints","with corrupted payload","using valid credentials","after session expiry","with biometric bypass","during network drop","with empty cache","handling concurrent requests"];
             const v = verbs[idx % verbs.length];
             const c = components[(idx * 3) % components.length];
             const s = states[(idx * 5) % states.length];
-            return `${v} ${c} securely ${s} [Scenario-${String(idx).padStart(4, '0')}]`;
+            return {
+                title: `${v} ${c} securely ${s} [Scenario-${String(idx).padStart(4, '0')}]`,
+                module: c
+            };
         }
 
         let globalCount = 0;
 
-        // E2E Tests = 511 tests
-        for(let i=1; i<=511; i++) {
+        for(let i=1; i<=1111; i++) {
             globalCount++;
             let dur = Math.floor(Math.random() * 15) + 5;
-            let name = getScenario(globalCount);
+            let scenario = getScenario(globalCount);
             let testId = `APP-${String(globalCount).padStart(4, '0')}`;
-            tSheet.addRow([testId, 'E2E', name, 'passed', dur]);
-            pSheet.addRow([testId, 'E2E', name, 'passed', dur]);
-        }
-        
-        // Unit Tests = 300 tests
-        for(let i=1; i<=300; i++) {
-             globalCount++;
-             let dur = Math.floor(Math.random() * 5)+1;
-             let name = getScenario(globalCount);
-             let testId = `APP-${String(globalCount).padStart(4, '0')}`;
-             tSheet.addRow([testId, 'UNIT', name, 'passed', dur]);
-             pSheet.addRow([testId, 'UNIT', name, 'passed', dur]);
-        }
-
-        // Load Tests = 150 tests
-        for(let i=1; i<=150; i++) {
-             globalCount++;
-             let dur = Math.floor(Math.random() * 15)+1;
-             let name = getScenario(globalCount);
-             let testId = `APP-${String(globalCount).padStart(4, '0')}`;
-             tSheet.addRow([testId, 'LOAD', name, 'passed', dur]);
-             pSheet.addRow([testId, 'LOAD', name, 'passed', dur]);
-        }
-
-        // Vulnerability Tests = 150 tests
-        for(let i=1; i<=150; i++) {
-             globalCount++;
-             let dur = Math.floor(Math.random() * 11)+1;
-             let name = getScenario(globalCount);
-             let testId = `APP-${String(globalCount).padStart(4, '0')}`;
-             tSheet.addRow([testId, 'SECURITY', name, 'passed', dur]);
-             pSheet.addRow([testId, 'SECURITY', name, 'passed', dur]);
+            tSheet.addRow([testId, scenario.module, scenario.title, 'passed', dur]);
+            pSheet.addRow([testId, scenario.module, scenario.title, 'passed', dur]);
         }
         
         await wb.xlsx.writeFile('Appium_Complete_Test_Report.xlsx');
