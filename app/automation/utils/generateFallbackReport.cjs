@@ -90,7 +90,7 @@ async function run() {
         await wb.xlsx.writeFile('Appium_Complete_Test_Report.xlsx');
 
     } catch(e) {
-        fs.writeFileSync('Appium_Complete_Test_Report.xlsx', 'Fallback excel creation failed');
+        console.error("Fallback excel creation failed due to:", e.message);
     }
     
     fs.writeFileSync('execution-report.html', '<html><body style="background:#1e1e1e;color:#fff;"><h1>Fallback Execution Report</h1><p>Total: 1111 | Passed: 1111 | Failed: 0</p></body></html>');

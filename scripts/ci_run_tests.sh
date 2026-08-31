@@ -29,6 +29,7 @@ timeout 30 bash -c 'until curl -s http://127.0.0.1:4723/status > /dev/null; do s
 
 # Navigate to Appium independent workspace
 cd ./app/automation
+npm install --legacy-peer-deps
 
 # Execute WDIO
 export WDIO_CI_SPEC="./tests/12_e2e/mega_android_1100.test.js"
