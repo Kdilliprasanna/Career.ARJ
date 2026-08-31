@@ -18,10 +18,11 @@ const categories = {
     'File Upload': 10,
     'Accessibility': 10,
     'Responsive Design': 10,
-    'Regression': 10
+    'Regression': 10,
+    'Vulnerability': 30
 };
 
-describe('Selenium LIVE E2E Framework (420 Tests)', function() {
+describe('Selenium LIVE E2E Framework (480 Tests)', function() {
     let driver;
 
     before(async function() {
