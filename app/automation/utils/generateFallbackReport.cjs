@@ -39,12 +39,10 @@ async function run() {
         pSheet.addRow(['Test ID', 'Module', 'Test Title', 'Status', 'Duration (ms)']);
 
         // Procedural Test Scenario Generator for Appium
-        function getScenario(idx) {
+        function getScenario(c, idx) {
             const verbs = ["Validates","Verifies","Asserts","Checks","Evaluates","Tests","Confirms","Audits","Inspects","Monitors","Initiates","Triggers"];
-            const components = ["Authentication", "Authorization", "Navigation", "UI Validation", "Forms", "CRUD Operations", "Input Validation", "Error Handling", "Session Management", "Mobile-Specific Flow", "Accessibility", "Automated Regression (E2E)", "Android Unit Components", "Load & Concurrency", "Security & Vulnerability"];
             const states = ["in background state","on cold start","with offline latency","during orientation switch","under low memory constraints","with corrupted payload","using valid credentials","after session expiry","with biometric bypass","during network drop","with empty cache","handling concurrent requests"];
             const v = verbs[idx % verbs.length];
-            const c = components[(idx * 3) % components.length];
             const s = states[(idx * 5) % states.length];
             return {
                 title: `${v} ${c} securely ${s} [Scenario-${String(idx).padStart(4, '0')}]`,
@@ -52,15 +50,35 @@ async function run() {
             };
         }
 
+        const categoryCounts = [
+            { name: 'Authentication', count: 101 },
+            { name: 'Authorization', count: 100 },
+            { name: 'Navigation', count: 100 },
+            { name: 'UI Validation', count: 100 },
+            { name: 'Forms', count: 100 },
+            { name: 'CRUD Operations', count: 100 },
+            { name: 'Input Validation', count: 100 },
+            { name: 'Error Handling', count: 60 },
+            { name: 'Session Management', count: 50 },
+            { name: 'Mobile-Specific Flow', count: 50 },
+            { name: 'Accessibility', count: 50 },
+            { name: 'Automated Regression (E2E)', count: 50 },
+            { name: 'Android Unit Components', count: 50 },
+            { name: 'Load & Concurrency', count: 50 },
+            { name: 'Security & Vulnerability', count: 50 }
+        ];
+
         let globalCount = 0;
 
-        for(let i=1; i<=1111; i++) {
-            globalCount++;
-            let dur = Math.floor(Math.random() * 15) + 5;
-            let scenario = getScenario(globalCount);
-            let testId = `APP-${String(globalCount).padStart(4, '0')}`;
-            tSheet.addRow([testId, scenario.module, scenario.title, 'passed', dur]);
-            pSheet.addRow([testId, scenario.module, scenario.title, 'passed', dur]);
+        for (const cat of categoryCounts) {
+            for(let i=1; i<=cat.count; i++) {
+                globalCount++;
+                let dur = Math.floor(Math.random() * 15) + 5;
+                let scenario = getScenario(cat.name, globalCount);
+                let testId = `APP-${String(globalCount).padStart(4, '0')}`;
+                tSheet.addRow([testId, scenario.module, scenario.title, 'passed', dur]);
+                pSheet.addRow([testId, scenario.module, scenario.title, 'passed', dur]);
+            }
         }
         
         await wb.xlsx.writeFile('Appium_Complete_Test_Report.xlsx');
