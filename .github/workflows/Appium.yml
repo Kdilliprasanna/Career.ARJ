@@ -1,4 +1,4 @@
-name: Android E2E Appium Tests
+name: Appium
 
 on:
   push:

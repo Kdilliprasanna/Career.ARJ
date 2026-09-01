@@ -1,4 +1,4 @@
-name: Web Selenium Tests
+name: Selenium
 
 on:
   push:

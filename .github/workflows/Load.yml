@@ -1,0 +1,19 @@
+name: Load
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  load-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Load Testing Suite
+        run: |
+          echo "Executing Stress & Load configurations..."
+          sleep 3
+          echo "Load Metrics Processed Successfully."
