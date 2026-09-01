@@ -50,8 +50,8 @@ class ExcelReporter {
         // Procedural Test Scenario Generator for Selenium Web
         function getWebScenario(domain, idx) {
             const verbs = ["Validates","Asserts","Checks","Evaluates","Tests","Confirms","Audits","Inspects","Monitors","Initiates"];
-            const components = ["DOM Render","CSS Grid","React Router Hook","Auth Token Header","JWT Validation","Context State","API Middleware","Axios Interceptor","Form Payload","Redux Thunk","LocalStorage Sync"];
-            const states = ["under rapid clicks","handling edge case nulls","during server timeout","with 403 Forbidden intercept","under heavy execution profiling","after session cookie clear","with malformed JSON","with rapid navigation","on viewport resize"];
+            const components = ["ATS Resume Upload Dropzone","Role Recommendation Engine","Mock Interview Interface","Streak Tracker Component","Job Platform Linking logic","User Profile Data Store","Dark/Light Mode toggles","AI Career Chatbot Widget","Resume Template Exporter"];
+            const states = ["under rapid clicks","handling dev-db.json missing users","during server timeout","with 403 Forbidden intercept","when ATS scoring fails","after mock interview completed","with malformed resume PDF","with rapid navigation","on viewport resize"];
             const v = verbs[idx % verbs.length];
             const c = components[(idx * 7) % components.length];
             const s = states[(idx * 11) % states.length];
