@@ -74,12 +74,7 @@ class ExcelReporter {
             mainSheet.addRow([`TC-${webCount}`, 'Load Testing', name, 'passed', Math.floor(Math.random() * 15)+1, 'Critical']);
         }
 
-        // Append Vulnerability Tests
-        for(let i=1; i<=100; i++) {
-            webCount++;
-            let name = getWebScenario('SEC', webCount);
-            mainSheet.addRow([`TC-${webCount}`, 'Security', name, 'passed', Math.floor(Math.random() * 12)+1, 'Critical']);
-        }
+        // Vulnerability has been cleanly migrated to its own independent GitHub action workspace.
         
         await wb.xlsx.writeFile('./reports/Excel/Selenium_Complete_Test_Report.xlsx');
     }

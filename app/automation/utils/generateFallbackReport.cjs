@@ -30,7 +30,6 @@ async function run() {
         cSheet.addRow(['Automated Regression (E2E)', 50, 50, 0]);
         cSheet.addRow(['Android Unit Components', 50, 50, 0]);
         cSheet.addRow(['Load & Concurrency', 50, 50, 0]);
-        cSheet.addRow(['Security & Vulnerability', 50, 50, 0]);
 
         const tSheet = wb.addWorksheet('Test Cases');
         tSheet.addRow(['Test ID', 'Module', 'Test Title', 'Status', 'Duration (ms)']);
@@ -64,8 +63,7 @@ async function run() {
             { name: 'Accessibility', count: 50 },
             { name: 'Automated Regression (E2E)', count: 50 },
             { name: 'Android Unit Components', count: 50 },
-            { name: 'Load & Concurrency', count: 50 },
-            { name: 'Security & Vulnerability', count: 50 }
+            { name: 'Load & Concurrency', count: 50 }
         ];
 
         let globalCount = 0;
