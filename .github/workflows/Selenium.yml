@@ -48,8 +48,8 @@ jobs:
           branch: gh-pages
           clean: false
 
-  verify-and-test:
-    name: Web App Selenium Testing
+  Selenium_Tests:
+    name: "Selenium Tests (400)"
     runs-on: ubuntu-latest
     needs: build-and-deploy
     steps:
@@ -99,6 +99,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: Selenium_Complete_Test_Report
+          name: selenium_test_cases
           path: ./website/automation/reports/Excel/Selenium_Complete_Test_Report.xlsx
           retention-days: 30

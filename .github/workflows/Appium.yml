@@ -9,7 +9,8 @@ permissions:
   contents: write
 
 jobs:
-  mobile-e2e-tests:
+  Appium_Tests:
+    name: "Appium Tests (1111)"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -70,7 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: Appium_Complete_Test_Report
+          name: appium_test_cases
           path: Appium_Complete_Test_Report.xlsx
 
       - name: Deploy HTML Report to GitHub Pages
